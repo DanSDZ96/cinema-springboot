@@ -46,6 +46,19 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.schiano</groupId>
+			<artifactId>e-commerce</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.30</version> <!-- Usa l'ultima versione stabile -->
+    <scope>provided</scope>
+</dependency>
+
 	</dependencies>
 
 	<build>

@@ -1,63 +1,35 @@
 package org.schiano.cinema.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Biglietto {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Spettacolo spettacolo;
+	
 	private Double prezzo;
-	
-	
-	public Biglietto() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-		
-	public Biglietto(Long id, Spettacolo spettacolo, Double prezzo) {
-		super();
-		this.id = id;
-		this.spettacolo = spettacolo;
-		this.prezzo = prezzo;
-	}
 
-
-
-
-
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Spettacolo getSpettacolo() {
-		return spettacolo;
-	}
-	public void setSpettacolo(Spettacolo spettacolo) {
-		this.spettacolo = spettacolo;
-	}
-	public Double getPrezzo() {
-		return prezzo;
-	}
-	public void setPrezzo(Double prezzo) {
-		this.prezzo = prezzo;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Biglietto [id=" + id + ", spettacolo=" + spettacolo + ", prezzo=" + prezzo + "]";
-	}
-
+	@ManyToOne
+	@JoinColumn(name = "spettacolo_id")
+//@JSONIgnore
+	private Spettacolo spettacolo;
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@ManyToOne
+	@JoinColumn(name = "utente_id")
+	private Utente utente;
 	
 }

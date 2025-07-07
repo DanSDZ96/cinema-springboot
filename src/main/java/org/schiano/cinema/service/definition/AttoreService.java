@@ -5,6 +5,6 @@ import org.schiano.cinema.model.Attore;
 public interface AttoreService extends GeneralService<Attore> {
 	//Attore getAttoreByNomeCognome(String nome, String cognome);
 
-	//si possono poi aggiungere ulteriori metodi nell'interfaccia specifici a questa
-	//poi andranno tutti implementati (override) nell'implementazione
+	/*si possono aggiungere ulteriori metodi nell'interfaccia che
+	poi andranno tutti definiti nell'implementazione*/
 }

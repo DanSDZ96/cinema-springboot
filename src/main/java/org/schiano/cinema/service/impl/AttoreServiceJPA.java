@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.schiano.cinema.model.Attore;
 import org.schiano.cinema.service.definition.AttoreService;
-import org.schiano.cinema.utility.Database;
+import org.schiano.cinema.utility.DBInit;
 
-public class AttoreServiceImpl implements AttoreService {
+public class AttoreServiceJPA implements AttoreService {
 	
-	private final List<Attore> listaAttori = Database.listaAttori ;
+	private final List<Attore> listaAttori = DBInit.listaAttori ;
 	
 	@Override
 	public void create(Attore attore) {

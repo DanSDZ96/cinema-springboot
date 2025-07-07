@@ -1,58 +1,44 @@
 package org.schiano.cinema.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Attore {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String cognome;
 	
-	public Attore() {};
+	@ManyToMany(mappedBy = "attori")
+	@JsonIgnore
+	@ToString.Exclude
+	private List<Film> film;
+	
 	
 	public Attore(String nome, String cognome) {
 		this.nome = nome;
 		this.cognome = cognome;
 	}
 	
-	public Attore(Long id, String nome, String cognome) {
-		this(nome,cognome);
-		this.id = id;
-	}
-
-	
-	
-	public Long getId() {
-		return id;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
-	
-	public String getCognome() {
-		return cognome;
-	}
-
-	
-	
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public void setCognome(String cognome) {
-		this.cognome = cognome;
-	}
-	
-	
-	
-	@Override
-	public String toString() {
-		return "Attore [id=" + id + ", nome=" + nome + ", cognome=" + cognome + "]";
-	}
-
 
 	
 }

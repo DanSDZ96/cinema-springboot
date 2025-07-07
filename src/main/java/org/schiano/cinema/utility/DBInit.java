@@ -9,7 +9,7 @@ import org.schiano.cinema.model.Spettacolo;
 
 
 
-public class Database {
+public class DBInit {
 	
 	
 	public static final List<Attore> listaAttori = new ArrayList<Attore> (List.of( 

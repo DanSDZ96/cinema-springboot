@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.schiano.cinema.model.Film;
 import org.schiano.cinema.service.definition.FilmService;
-import org.schiano.cinema.utility.Database;
+import org.schiano.cinema.utility.DBInit;
 
-public class FilmServiceImpl implements FilmService {
+public class FilmServiceJPA implements FilmService {
 	
-	List<Film> listaFilm = Database.listaFilm;
+	List<Film> listaFilm = DBInit.listaFilm;
 
 	@Override
 	public void create(Film entity) {
