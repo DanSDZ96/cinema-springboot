@@ -3,43 +3,44 @@ package org.schiano.cinema.service.impl;
 import java.util.List;
 
 import org.schiano.cinema.model.Film;
+import org.schiano.cinema.repository.FilmRepository;
 import org.schiano.cinema.service.definition.FilmService;
-import org.schiano.cinema.utility.DBInit;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FilmServiceJPA implements FilmService {
-	
-	List<Film> listaFilm = DBInit.listaFilm;
+
+	@Autowired
+	private FilmRepository filmRepository;
 
 	@Override
-	public void create(Film entity) {
-		listaFilm.add(entity);
+	public void create(Film film) {
+		filmRepository.save(film);
+
 	}
 
 	@Override
 	public List<Film> getAll() {
-		return listaFilm;
+		return filmRepository.findAll();
 	}
 
 	@Override
 	public Film getById(Long id) {
-		for (Film f : listaFilm) {
-			if (f.getId().equals(id)) {
-				return f;
-			}
-		}
-		return null;
+		return filmRepository.findById(id).orElseThrow();
 	}
 
 	@Override
-	public void update(Film entity) {
-		// TODO Auto-generated method stub
-		
+	public void update(Film film) {
+		if (film.getId() != null && filmRepository.existsById(film.getId())) {
+			filmRepository.save(film);
+		}
+
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+		filmRepository.deleteById(id);
 	}
 
 }

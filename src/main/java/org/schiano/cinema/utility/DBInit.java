@@ -1,13 +1,11 @@
 package org.schiano.cinema.utility;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.schiano.cinema.model.Attore;
 import org.schiano.cinema.model.Film;
 import org.schiano.cinema.model.Genere;
 import org.schiano.cinema.model.Sala;
-import org.schiano.cinema.model.Spettacolo;
 import org.schiano.cinema.repository.AttoreRepository;
 import org.schiano.cinema.repository.FilmRepository;
 import org.schiano.cinema.repository.SalaRepository;

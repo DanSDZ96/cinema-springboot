@@ -2,49 +2,56 @@ package org.schiano.cinema.service.impl;
 
 import java.util.List;
 
+import org.schiano.cinema.error.exceptions.AttoreNonTrovatoException;
+import org.schiano.cinema.error.exceptions.UpdateSenzaIdException;
 import org.schiano.cinema.model.Attore;
+import org.schiano.cinema.repository.AttoreRepository;
 import org.schiano.cinema.service.definition.AttoreService;
-import org.schiano.cinema.utility.DBInit;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class AttoreServiceJPA implements AttoreService {
-	
-	private final List<Attore> listaAttori = DBInit.listaAttori ;
-	
+
+    @Autowired
+	private AttoreRepository attoreRepository;
+
 	@Override
 	public void create(Attore attore) {
-		listaAttori.add(attore);
+		attoreRepository.save(attore);
 	}
 	
 	@Override
 	public List<Attore> getAll() {
-		return listaAttori;
+		return attoreRepository.findAll();
 	}
 	
 	@Override
 	public Attore getById(Long id) {
-		for (Attore a : listaAttori) {
-			if (a.getId().equals(id)) {
-				return a;
-			}
-		}
-		return null;
+		return attoreRepository.findById(id).orElse(null);
 	}
 	
 	@Override
 	public void update (Attore attore) {
-		for (Attore a : listaAttori) {
-			if (a.getId().equals(attore.getId())) {
-				a.setNome(attore.getNome());
-				a.setCognome(attore.getCognome());
-				return;
-			}
+		if(attore.getId() == null) {
+			throw new UpdateSenzaIdException("ID mancante");
 		}
+		
+		if(!attoreRepository.existsById(attore.getId())) {
+			throw new AttoreNonTrovatoException("Attore non trovato");
+		}
+		
+		attoreRepository.save(attore);
+
 	}
 	
 	@Override
 	public void delete (Long id) {
-		listaAttori.removeIf(a -> a.getId().equals(id));
-		
+		if(!attoreRepository.existsById(id)) {
+			throw new AttoreNonTrovatoException("Attore non trovato");
+		}
+		attoreRepository.deleteById(id);
 	}
 
 }
