@@ -29,5 +29,9 @@ public class Genere {
 	@JsonIgnore
 	@ToString.Exclude
 	private List<Film> film;
+	
+	public Genere(String nome) {
+		this.nome = nome;
+	}
 
 }
