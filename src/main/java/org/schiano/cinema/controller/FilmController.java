@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.schiano.cinema.dto.FilmDTO;
+import org.schiano.cinema.dto.NuovoFilmDTO;
 import org.schiano.cinema.mapper.FilmMapper;
 import org.schiano.cinema.model.Film;
+import org.schiano.cinema.model.Genere;
+import org.schiano.cinema.repository.GenereRepository;
 import org.schiano.cinema.service.definition.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +27,9 @@ import jakarta.validation.Valid;
 public class FilmController {
 	
 	@Autowired
+	private GenereRepository genereRepository;
+	
+	@Autowired
 	private FilmMapper filmMapper;
 
 	//@Autowired NO -- Iniezione tramite costruttore
@@ -31,9 +38,10 @@ public class FilmController {
     public FilmController(FilmService filmService) {
         this.filmService = filmService;
     }
-
+    
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/film")
-    public ResponseEntity<List<Film>> getAll() {
+    public ResponseEntity<List<FilmDTO>> getAll() {
         List<Film> films = filmService.getAll();
         List<FilmDTO> filmsDTO = new ArrayList<>();
         
@@ -42,11 +50,11 @@ public class FilmController {
         	filmsDTO.add(fDTO);
         }
         
-        return ResponseEntity.ok(films);
+        return ResponseEntity.ok(filmsDTO);
     }
     
     
-    @GetMapping("/film/{titolo}")
+    @GetMapping("/film/titolo/{titolo}")
     public ResponseEntity<List<Film>> getByTitolo(@PathVariable String titolo){
     	List<Film> filmList = filmService.getByTitolo(titolo);
     	
@@ -58,7 +66,7 @@ public class FilmController {
     	
     }
     
-    @GetMapping("/film/{genere}")
+    @GetMapping("/film/genere/{genere}")
     public ResponseEntity<List<Film>> getByGenere(@PathVariable String genere) {
     	List<Film> filmList = filmService.getByGenere(genere);
 		
@@ -84,9 +92,17 @@ public class FilmController {
     }
     
     @PostMapping("/admin/film")
-    public ResponseEntity<Void> aggiungiFilm(@RequestBody @Valid Film film) {
-        filmService.create(film);
-        return ResponseEntity.ok().build(); // oppure .created(...).build()
+    public ResponseEntity<Void> aggiungiFilm(@RequestBody @Valid NuovoFilmDTO film) {
+        Genere genere = genereRepository.findByNomeIgnoreCase(film.getGenere());
+    	
+        if( genere == null) 
+        	return ResponseEntity
+        			.badRequest()
+        			.build();
+        
+        Film f = new Film(film.getTitolo(), film.getDurata(), genere);
+        filmService.create(f);
+        return ResponseEntity.ok().build(); 
     }
 
     @PutMapping("/admin/film")

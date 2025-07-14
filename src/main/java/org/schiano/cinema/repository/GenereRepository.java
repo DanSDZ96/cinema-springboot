@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GenereRepository extends JpaRepository<Genere, Long> {
 
+	boolean existsByNomeIgnoreCase(String nome);
 	Genere findByNomeIgnoreCase(String nome);
+	boolean existsById(Long id);
+
 
 }

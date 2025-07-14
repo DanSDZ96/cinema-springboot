@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository		//Superfluo dato che estende JpaRepository
 public interface BigliettoRepository extends JpaRepository<Biglietto, Long> {
-
+	boolean existsById(Long id);
 }

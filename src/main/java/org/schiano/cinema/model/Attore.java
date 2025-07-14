@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +16,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -25,7 +25,10 @@ public class Attore {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false, length = 20)
 	private String nome;
+	@Column(nullable = false, length = 40)
 	private String cognome;
 	
 	@ManyToMany(mappedBy = "attori")
@@ -38,7 +41,5 @@ public class Attore {
 		this.nome = nome;
 		this.cognome = cognome;
 	}
-	
-
-	
+		
 }

@@ -3,11 +3,17 @@ package org.schiano.cinema.service.impl;
 import java.util.List;
 
 import org.schiano.cinema.model.Biglietto;
+import org.schiano.cinema.repository.BigliettoRepository;
 import org.schiano.cinema.service.definition.BigliettoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BigliettoServiceJPA implements BigliettoService{
+	
+	@Autowired
+	private BigliettoRepository bigliettoRepository;
+
 
 	@Override
 	public void create(Biglietto biglietto) {
@@ -37,6 +43,10 @@ public class BigliettoServiceJPA implements BigliettoService{
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public boolean exists(Long id) {
+	    return bigliettoRepository.existsById(id);
 	}
 
 }

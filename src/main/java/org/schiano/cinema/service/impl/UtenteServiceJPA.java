@@ -15,30 +15,23 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor //+final = AUTOWIRED moderno
 public class UtenteServiceJPA implements UtenteService {
+	
 
     private final UtenteRepository utenteRepository;
     private final UtenteMapper utenteMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UtenteDTO save(NuovoUtenteDTO utenteDTO) {
-        Utente temp = utenteMapper.fromInsertUtenteDTO(utenteDTO);
-        temp.setNome(utenteDTO.getNome());
-        temp.setCognome(utenteDTO.getCognome());
-        temp.setUsername(utenteDTO.getUsername());
-        temp.setRuolo(Ruolo.UTENTE);
-        temp.setPassword(passwordEncoder.encode(utenteDTO.getPassword()));
-        temp.setEmail(utenteDTO.getEmail());
-        temp = utenteRepository.save(temp);
-        return utenteMapper.toUtenteDTO(temp);
-    }
+    @Override
+    public UtenteDTO create(NuovoUtenteDTO utenteDTO) {
+        Utente ut = utenteMapper.fromInsertUtenteDTO(utenteDTO);
 
-	@Override
-	public void create(Utente u) {
-        u.setPassword(passwordEncoder.encode(u.getPassword()));
-        //u.setRuolo(Ruolo.UTENTE);
-        utenteRepository.save(u);
+        ut.setRuolo(Ruolo.UTENTE);
+        ut.setPassword(passwordEncoder.encode(utenteDTO.getPassword()));
+
+        ut = utenteRepository.save(ut);
+        return utenteMapper.toUtenteDTO(ut);
     }
 
 	@Override
@@ -84,5 +77,26 @@ public class UtenteServiceJPA implements UtenteService {
             utenteRepository.deleteById(id);
         }
     }
+
+	@Override
+	public boolean exists(Long id) {
+	    return utenteRepository.existsById(id);
+	}
+
+	@Override
+	public void create(Utente entity) {
+	    if (entity.getPassword() != null && !entity.getPassword().isBlank()) {
+	        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+	    }
+
+	    // Imposta il ruolo di default se non presente
+	    if (entity.getRuolo() == null) {
+	        entity.setRuolo(Ruolo.UTENTE);
+	    }
+
+	    utenteRepository.save(entity);
+	}
+
+
 
 }

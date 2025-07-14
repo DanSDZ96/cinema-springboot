@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AttoreRepository extends JpaRepository<Attore, Long>{
+	boolean existsById(Long id);
 
 }

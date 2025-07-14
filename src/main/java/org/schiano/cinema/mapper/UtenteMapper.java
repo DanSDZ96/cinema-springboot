@@ -18,15 +18,17 @@ public class UtenteMapper {
 	
 	private final BigliettoMapper bigliettoMapper;
 
-    public Utente fromInsertUtenteDTO(NuovoUtenteDTO dto) {		//static?
-        Utente u = new Utente();
-        u.setNome(dto.getNome());
-        u.setCognome(dto.getCognome());
-        u.setUsername(dto.getUsername());
-        u.setEmail(dto.getEmail());
-        u.setPassword(dto.getPassword());		//Codificata nel Service
-        return u;
-    }
+	public Utente fromInsertUtenteDTO(NuovoUtenteDTO dto) {
+	    if (dto == null) return null;
+
+	    Utente u = new Utente();
+	    u.setNome(dto.getNome());
+	    u.setCognome(dto.getCognome());
+	    u.setUsername(dto.getUsername());
+	    u.setEmail(dto.getEmail());
+	    u.setPassword(dto.getPassword());  // da codificare nel service
+	    return u;
+	}
 
     public UtenteDTO toUtenteDTO(Utente utente) {
         UtenteDTO dto = new UtenteDTO();

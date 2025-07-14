@@ -10,4 +10,6 @@ public interface GeneralService<T> {
 	T getById(Long id);		//READ by ID
 	void update(T entity); 	//UPDATE
 	void delete(Long id);	//DELETE
+	
+	boolean exists(Long id);
 }

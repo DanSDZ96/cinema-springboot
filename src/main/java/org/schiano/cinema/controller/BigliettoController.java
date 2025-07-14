@@ -45,14 +45,23 @@ public class BigliettoController {
 	
 	@DeleteMapping("/biglietti/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-	    bigliettoService.delete(id);
+	    if(!bigliettoService.exists(id)) {
+	    	return ResponseEntity.notFound().build();
+	    }
+		
+		bigliettoService.delete(id);
 	    return ResponseEntity.ok().build();
 	}
 
 	
-	@PutMapping("/biglietti")
-	public ResponseEntity<Void> update(@RequestBody @Valid BigliettoDTO dto) {
-	    bigliettoService.update(bigliettoMapper.fromDto(dto));
+	@PutMapping("/biglietti/{id}")
+	public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid BigliettoDTO dto) {
+	    if(!bigliettoService.exists(id)) {
+	    	return ResponseEntity.notFound().build();
+	    }
+		Biglietto b = bigliettoMapper.fromDto(dto);
+		b.setId(id);
+		bigliettoService.update(b);
 	    return ResponseEntity.ok().build();
 	}
 
@@ -60,15 +69,9 @@ public class BigliettoController {
 	@PostMapping("/biglietti")
 	public ResponseEntity<Void> aggiungiBiglietto(@RequestBody @Valid NuovoBigliettoDTO dto) {
 	    bigliettoService.create(bigliettoMapper.fromDto(dto));
-	    return ResponseEntity.ok().build();
+	    return ResponseEntity.status(201).build();
 	}
 
-	
-	
-	
-	
-	
-	
 	
 
 }

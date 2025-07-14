@@ -2,7 +2,9 @@ package org.schiano.cinema.mapper;
 
 import org.schiano.cinema.dto.FilmDTO;
 import org.schiano.cinema.model.Film;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FilmMapper {
 	public FilmDTO toDTO(Film film) {
         FilmDTO dto = new FilmDTO();

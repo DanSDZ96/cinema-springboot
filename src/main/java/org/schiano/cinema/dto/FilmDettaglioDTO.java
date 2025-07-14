@@ -2,6 +2,8 @@ package org.schiano.cinema.dto;
 
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -9,9 +11,14 @@ public class FilmDettaglioDTO {		//questo lo si usa quando si seleziona un singo
 
 
     private Long id;
-    private String titolo;
+
+    @NotBlank(message="Nome obbligatorio")
+	private String titolo;
+    @NotNull(message = "Prezzo obbligatorio")
     private Integer durata;
-    private String genere;
+    
+    @NotBlank(message="Nome obbligatorio")
+	private String genere;
 
     // Lista di Nome Cognome degli attori
     private List<String> attori;

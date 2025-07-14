@@ -53,5 +53,10 @@ public class AttoreServiceJPA implements AttoreService {
 		}
 		attoreRepository.deleteById(id);
 	}
+	
+	
+	public boolean exists(Long id) {
+	    return attoreRepository.existsById(id);
+	}
 
 }

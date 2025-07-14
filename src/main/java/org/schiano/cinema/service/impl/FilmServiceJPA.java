@@ -62,6 +62,12 @@ public class FilmServiceJPA implements FilmService {
 	    public List<Film> getByTitolo(String titolo) {
 	        return filmRepository.findByTitoloContainingIgnoreCase(titolo);
 	    }
+
+	@Override
+	public boolean exists(Long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 	
