@@ -7,7 +7,6 @@ import org.schiano.cinema.dto.NuovoBigliettoDTO;
 import org.schiano.cinema.mapper.BigliettoMapper;
 import org.schiano.cinema.model.Biglietto;
 import org.schiano.cinema.service.definition.BigliettoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,15 +17,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class BigliettoController {
 
-	@Autowired
-    private BigliettoMapper bigliettoMapper;
-	
-	@Autowired
-	private BigliettoService bigliettoService;
+	private final BigliettoMapper bigliettoMapper;
+	private final BigliettoService bigliettoService;
 
 
 	@GetMapping("/admin/biglietti")

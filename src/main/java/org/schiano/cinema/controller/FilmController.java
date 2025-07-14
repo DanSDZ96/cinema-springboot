@@ -10,7 +10,6 @@ import org.schiano.cinema.model.Film;
 import org.schiano.cinema.model.Genere;
 import org.schiano.cinema.repository.GenereRepository;
 import org.schiano.cinema.service.definition.FilmService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,22 +21,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor	//SOSTITUISCE AUTOWIRED
 public class FilmController {
 	
-	@Autowired
-	private GenereRepository genereRepository;
-	
-	@Autowired
-	private FilmMapper filmMapper;
+	private final GenereRepository genereRepository;
+	private final FilmMapper filmMapper;
+	private final FilmService filmService;
 
-	//@Autowired NO -- Iniezione tramite costruttore
-    private final FilmService filmService;
-
-    public FilmController(FilmService filmService) {
-        this.filmService = filmService;
-    }
     
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/film")
